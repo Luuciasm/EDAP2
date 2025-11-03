@@ -106,24 +106,23 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 			do {
 				Node<T> sig = actual.next;
 				if(actual.data.equals(elem)) {
-					if(actual == actual.next) {
-						last = null; //O(1)
-						actual = null;
-					}else {
-						actual.prev.next = actual.next;
-						actual.next.prev = actual.prev;
-						if(actual == last) {
-							last = last.prev;
-						}else if(actual == primero) {
-							primero = sig;
-						}
-						actual = sig;
-					}
 					count --;
-				}else {
+					if(count == 0) {
+						last = null;
+						return;
+					}
+					actual.prev.next = actual.next;
+					actual.next.prev = actual.prev;
+					if(actual == last) {
+						last = last.prev;
+					}else if(actual == primero) {
+						primero = sig;
+					}
+					}
+				else {
 					actual = sig;
 				}
-			}while(actual != null && actual != primero);
+			}while(actual != primero);
 		}
 	}
 

@@ -41,9 +41,17 @@ public class PruebaDoubleLinkedList {
 		l.remove(1);
 		visualizarNodos(l);
 		
+		
 		System.out.println("Prueba removeAll ...............");
-		l.removeAll(9);
-		visualizarNodos(l);
+		UnorderedDoubleLinkedList<Integer> l2 = new UnorderedDoubleLinkedList<Integer>();
+		l2.addToRear(9);
+		l2.addToRear(9);
+		l2.addToRear(9);
+		l2.addToRear(9);
+		l2.addToRear(9);
+		l2.addToRear(9);
+		l2.removeAll(9);
+		visualizarNodos(l2);
 		
 		System.out.println("Prueba removeFirst ...............");
 		l.removeFirst();
