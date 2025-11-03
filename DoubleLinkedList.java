@@ -7,7 +7,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 
 	// Atributos
 	protected Node<T> last;  // apuntador al �ltimo
-	protected String descr;  // descripci�n
+	protected String descr;  // descripción
 	protected int count;
 
 	// Constructor
@@ -101,23 +101,29 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	//Elimina todas las apariciones de un elemento de la lista
 		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
 		if(last!=null) {
-			Node<T> actual = last;//O(1)
+			Node<T> primero = last.next;
+			Node<T> actual = primero;//O(1)
 			do {
+				Node<T> sig = actual.next;
 				if(actual.data.equals(elem)) {
-					if(actual==actual.next) {
-						last=null; //O(1)
+					if(actual == actual.next) {
+						last = null; //O(1)
+						actual = null;
 					}else {
 						actual.prev.next = actual.next;
 						actual.next.prev = actual.prev;
 						if(actual == last) {
 							last = last.prev;
+						}else if(actual == primero) {
+							primero = sig;
 						}
+						actual = sig;
 					}
 					count --;
 				}else {
-					actual = actual.next;
+					actual = sig;
 				}
-			}while(actual.prev != last);
+			}while(actual != null && actual != primero);
 		}
 	}
 
@@ -155,14 +161,14 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	            nuevo.prev = nuevo;
 	        } else {
 	            nuevo.prev = nueva.last;
+	            nuevo.next = nueva.last.next;
 	            nueva.last.next = nuevo;
-	            nuevo.next = nueva.last;
-	            nueva.last.prev = nuevo;
+	            nueva.last.next.prev = nuevo;
 	            nueva.last = nuevo; // avanzar el puntero "last"
 	        }
 	        actual = actual.next;
 	        nueva.count++;
-	    } while (actual.prev != last.next);
+	    } while (actual != last.next);
 	    return nueva;
 	} 
 
@@ -182,17 +188,19 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	//Determina si la lista contiene un elemento concreto, y develve su referencia, null en caso de que no est�
 		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE
 		T rdo = null;
-		boolean esta = false;
-		Node <T> actual = last.next;
-		do {
-			if(actual.data.equals(elem)) {
-				esta = true;
-			}else {
-				actual = actual.next;
+		if (last != null) {
+			boolean esta = false;
+			Node <T> actual = last.next;
+			do {
+				if(actual.data.equals(elem)) {
+					esta = true;
+				}else {
+					actual = actual.next;
+				}
+			}while(!esta && actual != last.next);
+			if(esta) {
+				rdo = actual.data;
 			}
-		}while(!esta && actual.prev != last);
-		if(esta) {
-			rdo = actual.data;
 		}
 		return rdo;
 
@@ -201,11 +209,7 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 	public boolean isEmpty(){ 
 	//Determina si la lista est� vac�a
 	 // COMPLETAR EL CODIGO Y CALCULAR EL COSTE
-		if(last == null) {
-			return true;
-		}else {
-			 return false;
-		}
+		return last == null;
 }
 	
 	public int size(){ 
@@ -214,10 +218,9 @@ public class DoubleLinkedList<T> implements ListADT<T> {
 		return count;
 }
 	
-	/** Return an iterator to the stack that iterates through the items . */ 
-	public Iterator<T> iterator() { return new ListIterator(); } 
 
-	   // an iterator, doesn't implement remove() since it's optional 
+	public Iterator<T> iterator() { return new ListIterator(); } 
+ 
 	   private class ListIterator implements Iterator<T> { 
 
 		// COMPLETAR EL CODIGO Y CALCULAR EL COSTE

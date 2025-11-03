@@ -51,6 +51,20 @@ public class PruebaOrderedDoubleLinkedList {
 			System.out.println("7777? " + l2.find(new Persona("", "7777")));	
 			System.out.println("8888? " + l2.find(new Persona("", "8888")));	
 			
+			System.out.println("Prueba intersection ...............");
+			OrderedDoubleLinkedList<Integer> listaOrdenada = new OrderedDoubleLinkedList<Integer>();
+			listaOrdenada.add(3);
+			listaOrdenada.add(8);
+			listaOrdenada.add(6);
+			listaOrdenada.add(18);
+			listaOrdenada.add(1);
+			listaOrdenada.add(20);
+			listaOrdenada.add(5);
+			listaOrdenada.add(9);
+			listaOrdenada.visualizarNodos();
+			OrderedDoubleLinkedList<Integer> lista3 = listaOrdenada.intersection(l);
+			lista3.visualizarNodos();
+			
 			
 	}
 	}

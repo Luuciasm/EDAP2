@@ -39,15 +39,16 @@ public class UnorderedDoubleLinkedList<T> extends DoubleLinkedList<T> implements
 			}else {
 				actual = actual.next;
 			}
-		}while(!esta && actual.prev != last);
+		}while(!esta && actual != last.next);
 		Node<T> nuevo = new Node<T>(elem);
 		nuevo.next = actual.next;
 		nuevo.prev = actual;
 		actual.next.prev = nuevo;
 		actual.next = nuevo;
 		if(actual == last) {
-			last = last.next;
+			last = nuevo;
 		}
+		count ++;
 	}
 
 }
